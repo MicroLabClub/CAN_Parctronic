@@ -16,10 +16,8 @@ void setup()
   Serial.begin(9600);
 
   dd_can_setup();
-  //dd_joystick_setup();
   dd_dypa05_setup();
   dd_buzzer_setup();
-
   srv_control_setup();
 }
 
@@ -47,15 +45,13 @@ int srv_control_rec_cnt = SRV_CONTROL_REC+5;
 void loop()
 {
   if (--dd_joystick_rec_cnt <= 0)
-  {// send data per 10ms
-    //dd_joystick_loop();
+  {
     dd_dypa05_loop();
     dd_joystick_rec_cnt = DD_JOYSTICK_REC;
   }  
   
   if (--dd_buzzer_rec_cnt <= 0)
-  {// send data per 10ms
-    //dd_joystick_loop();
+  {
     dd_dypa05_loop();
     dd_buzzer_rec_cnt = DD_BUZZER_REC;
   }  
@@ -67,7 +63,7 @@ void loop()
   }  
   
   if (--send_rec_cnt <= 0)
-  {// send data per 100ms
+  {
     dd_can_send_loop();
     send_rec_cnt = CAN_SEND_REC;
   }
@@ -80,11 +76,8 @@ void loop()
   }
 
   if (--print_rec_cnt <= 0)
-  {// print data per 100ms
-    dd_can_matrix_print();
-    //dd_joystick_report();
+  {
     dd_dypa05_report();
-    dd_can_tx_buff_print();
 
     print_rec_cnt = CAN_PRINT_REC;
   }
