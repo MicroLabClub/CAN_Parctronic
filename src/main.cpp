@@ -18,6 +18,7 @@ void setup()
   dd_can_setup();
   dd_dypa05_setup();
   dd_buzzer_setup();
+
   srv_control_setup();
 }
 
@@ -47,12 +48,14 @@ void loop()
   if (--dd_joystick_rec_cnt <= 0)
   {
     dd_dypa05_loop();
+    dd_dypa05_report();
     dd_joystick_rec_cnt = DD_JOYSTICK_REC;
   }  
   
   if (--dd_buzzer_rec_cnt <= 0)
   {
     dd_dypa05_loop();
+    dd_dypa05_report();
     dd_buzzer_rec_cnt = DD_BUZZER_REC;
   }  
 
@@ -77,7 +80,8 @@ void loop()
 
   if (--print_rec_cnt <= 0)
   {
-    dd_dypa05_report();
+    dd_can_matrix_print();
+    dd_can_tx_buff_print();
 
     print_rec_cnt = CAN_PRINT_REC;
   }
